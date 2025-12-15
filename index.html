@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AngelthonShop — Beasts Of Bermuda</title>
+  <meta name="description" content="AngelthonShop — магазин внутриигровых товаров для Beasts Of Bermuda. Food, Lifitime Bless, Hitbox Expander, Buff talents RAGE, LEGIT." />
+  <style>
+    :root{
+      --bg:#071026;
+      --card:#0b1220;
+      --muted:#9fb0c8;
+      --accent:#7c3aed;
+      --accent-2:#06b6d4;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --glass-2: rgba(255,255,255,0.02);
+      color-scheme: dark;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                  linear-gradient(180deg,var(--bg),#031025 140%);
+      color:#e6f0fb;
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:1200px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+      align-items:start;
+    }
+
+    header{
+      grid-column:1 / -1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:6px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:56px;height:56px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;
+      box-shadow:0 10px 30px rgba(7,10,30,0.6);
+      font-size:18px;
+    }
+    h1{margin:0;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px}
+
+    main{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:var(--radius);
+      padding:20px;
+      min-height:560px;
+      box-shadow:0 12px 40px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .hero{
+      display:flex;gap:18px;align-items:flex-start;
+    }
+    .left{flex:1}
+    .kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px}
+    .title{font-size:26px;margin:10px 0 6px}
+    .desc{color:var(--muted);margin-bottom:12px}
+
+    /* Grid of product cards */
+    .products{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      margin-top:12px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);
+      display:flex;gap:12px;align-items:flex-start;position:relative;overflow:hidden;
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(2,6,23,0.6)}
+    .thumb{
+      width:84px;height:84px;border-radius:10px;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      display:flex;align-items:center;justify-content:center;font-size:28px;
+      backdrop-filter: blur(6px) saturate(120%);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .meta{flex:1}
+    .pname{font-weight:700}
+    .pdesc{color:var(--muted);font-size:13px;margin-top:6px}
+    .price{font-weight:800;color:var(--accent-2);margin-top:8px}
+
+    .actions{display:flex;gap:8px;margin-top:10px}
+    .btn{
+      padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+      background:transparent;color:inherit;cursor:pointer;font-weight:700;
+    }
+    .buy{background:linear-gradient(90deg,var(--accent),#5b21b6);color:white;border:none;box-shadow:0 8px 30px rgba(124,58,237,0.12)}
+
+    /* Sidebar */
+    aside{position:sticky;top:28px;align-self:start}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .cart-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .cart-item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px;border-radius:10px;background:var(--glass-2)}
+    .cart-item .name{font-weight:700}
+    .total{display:flex;justify-content:space-between;margin-top:12px;font-weight:800;color:var(--accent-2)}
+
+    /* Stepper */
+    .stepper{display:flex;gap:8px;align-items:center;margin-top:12px}
+    .step{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);font-weight:700}
+    .step.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 8px 20px rgba(7,10,30,0.6)}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:60;backdrop-filter: blur(6px);opacity:0;pointer-events:none;transition:opacity .18s ease}
+    .modal-backdrop.show{opacity:1;pointer-events:auto}
+    .modal{width:min(720px,94%);background:linear-gradient(180deg,#071026, #07182b);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(2,6,23,0.7)}
+    .modal h3{margin:0 0 8px}
+
+    /* Footer */
+    footer{grid-column:1 / -1;margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
+
+    /* Icons */
+    .icon{width:18px;height:18px;display:inline-block;vertical-align:middle}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr}
+      aside{position:relative;top:auto}
+      .products{grid-template-columns:1fr}
+    }
+
+    /* small animations */
+    .glow{animation:glow 2.6s infinite}
+    @keyframes glow{0%{filter:drop-shadow(0 0 0 rgba(124,58,237,0))}50%{filter:drop-shadow(0 8px 30px rgba(124,58,237,0.12))}100%{filter:drop-shadow(0 0 0 rgba(124,58,237,0))}}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <div class="brand">
+        <div class="logo" tabindex="0" aria-label="AngelthonShop logo">AS</div>
+        <div>
+          <h1>AngelthonShop</h1>
+          <div class="subtitle">Магазин для Beasts Of Bermuda — внутриигровые товары</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="kicker">Игра: <strong style="margin-left:6px">Beasts Of Bermuda</strong></div>
+        <button class="btn" id="openCartBtn">Корзина (<span id="cartCount">0</span>)</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="left">
+          <div class="kicker">Каталог</div>
+          <div class="title">Товары для Beasts Of Bermuda</div>
+          <div class="desc">Выберите предметы: **Food**, **Lifitime Bless**, **Hitbox Expander on mosa**, **Buff talents RAGE**, **Buff talent LEGIT**. Добавляйте в корзину, настраивайте количество и оформляйте заказ локально.</div>
+
+          <div class="products" id="products"></div>
+        </div>
+
+        <aside>
+          <div class="panel">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="font-weight:800">Ваша корзина</div>
+              <div class="small" id="cartTotalLabel">0 items</div>
+            </div>
+
+            <div class="cart-list" id="cartList"></div>
+
+            <div class="total">
+              <div>Итого</div>
+              <div id="cartTotal">0</div>
+            </div>
+
+            <div class="stepper" aria-hidden="false">
+              <div class="step active">1</div>
+              <div class="step">2</div>
+              <div class="step">3</div>
+              <div style="margin-left:auto">
+                <button class="btn" id="checkoutBtn">Оформить</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> AngelthonShop</div>
+      <div class="small">Демо-магазин — данные не отправляются на сервер</div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3 id="modalTitle">Товар</h3>
+      <p id="modalDesc" class="small"></p>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <label style="font-weight:700">Количество</label>
+        <input id="modalQty" type="number" min="1" value="1" style="width:80px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn" id="modalClose">Отмена</button>
+          <button class="buy" id="modalAdd">Добавить в корзину</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data: товары
+    const PRODUCTS = [
+      {id:1, name:'Food Hack', price:5, desc:'Food Hack - за секунду фулл еда'},
+      {id:2, name:'Lifitime Bless', price:25, desc:'Lifitime Bless - Бессконечный блесс'},
+      {id:3, name:'Hitbox Expander on mosa', price:12, desc:'Hitbox Expander on mosa - Больше рендж укуса дарта'},
+      {id:4, name:'Talent hack RAGE', price:18, desc:'1 поинт равняеться - 5-7'},
+      {id:5, name:'Talent hack LEGIT', price:18, desc:'Легит, все таланты +2 а если и так +2 то стакаеться'}
+    ];
+
+    // Utils
+    const $ = (s, ctx=document) => ctx.querySelector(s);
+    const create = (tag, attrs={}, children=[]) => {
+      const el = document.createElement(tag);
+      for(const k in attrs) {
+        if(k.startsWith('on')) el.addEventListener(k.slice(2), attrs[k]);
+        else el.setAttribute(k, attrs[k]);
+      }
+      children.forEach(c => typeof c === 'string' ? el.appendChild(document.createTextNode(c)) : el.appendChild(c));
+      return el;
+    };
+
+    // Render products
+    const productsEl = $('#products');
+    PRODUCTS.forEach(p => {
+      const card = create('div',{class:'card'},[
+        create('div',{class:'thumb'},[document.createTextNode(p.name.charAt(0))]),
+        create('div',{class:'meta'},[
+          create('div',{class:'pname'},[document.createTextNode(p.name)]),
+          create('div',{class:'pdesc'},[document.createTextNode(p.desc)]),
+          create('div',{class:'price'},[document.createTextNode(p.price + ' A$')]),
+          create('div',{class:'actions'},[
+            create('button',{class:'btn', onclick:()=>openModal(p)},['Подробнее']),
+            create('button',{class:'buy', onclick:()=>addToCart(p,1)},['Купить'])
+          ])
+        ])
+      ]);
+      productsEl.appendChild(card);
+    });
+
+    // Cart logic (localStorage)
+    const CART_KEY = 'angelthon_cart_v1';
+    let cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+
+    const cartList = $('#cartList');
+    const cartTotal = $('#cartTotal');
+    const cartCount = $('#cartCount');
+    const cartTotalLabel = $('#cartTotalLabel');
+
+    function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); renderCart(); }
+    function addToCart(product, qty=1){
+      const found = cart.find(i=>i.id===product.id);
+      if(found) found.qty += qty; else cart.push({id:product.id, name:product.name, price:product.price, qty});
+      saveCart();
+      flash(`${product.name} добавлен(ы)`);
+    }
+    function removeFromCart(id){
+      cart = cart.filter(i=>i.id!==id); saveCart();
+    }
+    function updateQty(id, qty){
+      const it = cart.find(i=>i.id===id); if(!it) return;
+      it.qty = Math.max(1, qty); saveCart();
+    }
+    function renderCart(){
+      cartList.innerHTML = '';
+      let total = 0, count = 0;
+      cart.forEach(item=>{
+        total += item.price * item.qty;
+        count += item.qty;
+        const el = create('div',{class:'cart-item'},[
+          create('div',{},[
+            create('div',{class:'name'},[item.name]),
+            create('div',{class:'small'},[item.price + ' A$'])
+          ]),
+          create('div',{},[
+            create('input',{type:'number', value:item.qty, min:1, style:'width:64px;padding:6px;border-radius:8px;background:transparent;color:inherit;border:1px solid rgba(255,255,255,0.04)' , oninput:(e)=>updateQty(item.id, parseInt(e.target.value)||1)}),
+            create('button',{class:'btn', onclick:()=>removeFromCart(item.id)},['Удалить'])
+          ])
+        ]);
+        cartList.appendChild(el);
+      });
+      cartTotal.textContent = total + ' A$';
+      cartCount.textContent = count;
+      cartTotalLabel.textContent = count + ' items';
+    }
+    renderCart();
+
+    // Modal
+    const modal = $('#modal');
+    const modalTitle = $('#modalTitle');
+    const modalDesc = $('#modalDesc');
+    const modalQty = $('#modalQty');
+    const modalAdd = $('#modalAdd');
+    const modalClose = $('#modalClose');
+    let modalProduct = null;
+
+    function openModal(product){
+      modalProduct = product;
+      modalTitle.textContent = product.name;
+      modalDesc.textContent = product.desc + ' — Цена: ' + product.price + ' A$';
+      modalQty.value = 1;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      modalProduct = null;
+    }
+    modalAdd.addEventListener('click', ()=> {
+      if(!modalProduct) return;
+      const q = Math.max(1, parseInt(modalQty.value)||1);
+      addToCart(modalProduct, q);
+      closeModal();
+    });
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+
+    // Checkout (local demo)
+    $('#checkoutBtn').addEventListener('click', ()=> {
+      if(cart.length === 0){ alert('Корзина пуста'); return; }
+      // Простая "покупка" — очищаем корзину и показываем анимацию
+      const total = cart.reduce((s,i)=>s + i.price*i.qty,0);
+      alert('Заказ оформлен локально. Итого: ' + total + ' A$');
+      cart = []; saveCart();
+    });
+
+    // small helpers
+    function flash(text){
+      const el = document.createElement('div');
+      el.textContent = text;
+      Object.assign(el.style,{position:'fixed',right:'20px',bottom:'20px',background:'linear-gradient(90deg,var(--accent),var(--accent-2))',padding:'10px 14px',borderRadius:'10px',color:'#fff',boxShadow:'0 10px 30px rgba(7,10,30,0.6)',zIndex:120});
+      document.body.appendChild(el);
+      setTimeout(()=> el.style.opacity = '0', 1400);
+      setTimeout(()=> el.remove(), 2000);
+    }
+
+    // Open cart button scrolls to aside
+    $('#openCartBtn').addEventListener('click', ()=> {
+      document.querySelector('aside').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // Year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Keyboard accessibility: Esc closes modal
+    window.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
+
+    // Initial small animation
+    document.querySelectorAll('.card').forEach((c,i)=> { c.style.transitionDelay = (i*60)+'ms'; });
+
+  </script>
+</body>
+</html>
